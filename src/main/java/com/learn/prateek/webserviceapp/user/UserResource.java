@@ -1,11 +1,15 @@
 package com.learn.prateek.webserviceapp.user;
 
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +35,7 @@ public class UserResource {
 	
 	//retrieve user with specific id
 	@GetMapping("/users/{id}")
-	public User retreiveUser(@PathVariable int id)
+	public Resource<User> retreiveUser(@PathVariable int id)
 	{
 		User user = service.findOne(id);
 		System.out.println(user);
@@ -40,7 +44,13 @@ public class UserResource {
 			throw new UserNotFoundException("id: "+ id);
 		}
 		
-		return user; 
+		/*** HATEOAS concept ***/
+		/* Add a link to retieve user /users/{id} request which will be having url to retrieve all users */
+		Resource<User> resource = new Resource<User>(user);			
+		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+		resource.add(linkTo.withRel("all-users"));
+			
+		return resource; 
 	}
 	
 	//create a user

@@ -1,13 +1,17 @@
 package com.learn.prateek.webserviceapp.filtering;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+//@JsonFilter declared as we will use it in dynamic filtering in FilteringController.java 
+
+@JsonFilter("filter_field2")
 public class SomeBean {
 	private String field1;
 	private String field2;
 	
 	@JsonIgnore
-	private String field3; //secure filed, we dont want it to send in response
+	private String field3; //secure filed, we dont want it to send in response (done using static filtering)
 	
 	
 	public SomeBean(String field1, String field2, String field3) {

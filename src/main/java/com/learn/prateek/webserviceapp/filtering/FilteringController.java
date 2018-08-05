@@ -3,14 +3,16 @@ package com.learn.prateek.webserviceapp.filtering;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/*** Controller showing filtering applied on SomeBean object during API calls ***/
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(value = { "value3" })
 
 @RestController
 public class FilteringController {
-	
-	@GetMapping("/filtering")
-	public SomeBean retrieveSomeBean() {
-		return new SomeBean("value1","value2","value3");
-	}
 
+	@GetMapping("/filtering")
+	public SomeBean uriV1() {
+		return new SomeBean("value1", "value2", "value3");
+	}
 }

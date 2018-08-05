@@ -2,6 +2,9 @@ package com.learn.prateek.webserviceapp.user;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -10,7 +13,11 @@ import io.swagger.annotations.ApiModelProperty;
 
 /* @ApiModel will be user by swagger to show User model to the consumer */
 @ApiModel(description="All details about the user")
+@Entity			//Used for JPA to define User as am entity
 public class User {
+	
+	@Id								//JPA annotation
+	@GeneratedValue					//JPA annotation
 	private Integer id;
 	
 	/* Added validation using annotation and error message that consumer will get if validation failed */
